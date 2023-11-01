@@ -10,7 +10,7 @@ namespace Cars.Services
 {
     public class DataBase
     {
-        private int AuthorizationUserId = 0;
+        public bool UserIsAdmin { get; set; }
 
         public DataBase()
         {
@@ -39,13 +39,7 @@ namespace Cars.Services
         //Cars
         public async Task<List<Car>> GetCarsAsync()
         {
-            if(AuthorizationUserId == 0)
-                return EFSingleTon.instance.Cars.ToList();
-            else
-            {
-                List<Car> cars = EFSingleTon.instance.Cars.Where(c => c.UserId == AuthorizationUserId).ToList();
-                return cars;
-            }
+            return EFSingleTon.instance.Cars.ToList();
         }
         public async Task<Car> GetCarAsync(int id)
         {
@@ -69,9 +63,6 @@ namespace Cars.Services
             BodyType bodyType = DB.instance.GetBodyTypeAsync(car.IdBodyType).Result;
             bodyTypeView += ("Кузов: " + bodyType.Title);
             
-            if(AuthorizationUserId != 0)
-                car.UserId = AuthorizationUserId;
-
             car.EngineView = engineView;
             car.BodyTypeView = bodyTypeView;
 
@@ -113,12 +104,7 @@ namespace Cars.Services
         //Engines
         public async Task<List<Engine>> GetEnginesAsync()
         {
-            if (AuthorizationUserId == 0)
-                return EFSingleTon.instance.Engines.ToList();
-            else
-            {
-                return EFSingleTon.instance.Engines.Where(c => c.UserId == AuthorizationUserId).ToList();
-            }
+           return EFSingleTon.instance.Engines.ToList();
         }
         public async Task<Engine> GetEngineAsync(int id)
         {
@@ -133,9 +119,6 @@ namespace Cars.Services
             if (engine == null)
                 return false;
             
-            if (AuthorizationUserId != 0)
-                engine.UserId = AuthorizationUserId;
-
             EFSingleTon.instance.Engines.Add(engine);
             EFSingleTon.instance.SaveChanges();
             return true;
@@ -171,12 +154,7 @@ namespace Cars.Services
         //BodyTypes
         public async Task<List<BodyType>> GetBodyTypesAsync()
         {
-            if (AuthorizationUserId == 0)
-                return EFSingleTon.instance.BodyTypes.ToList();
-            else
-            {
-                return EFSingleTon.instance.BodyTypes.Where(c => c.UserId == AuthorizationUserId).ToList();
-            }
+            return EFSingleTon.instance.BodyTypes.ToList();
         }
         public async Task<BodyType> GetBodyTypeAsync(int id)
         {
@@ -191,10 +169,6 @@ namespace Cars.Services
         {
             if (bodyType == null)
                 return false;
-
-
-            if (AuthorizationUserId != 0)
-                bodyType.UserId = AuthorizationUserId;
 
             EFSingleTon.instance.BodyTypes.Add(bodyType);
             EFSingleTon.instance.SaveChanges();
@@ -229,10 +203,14 @@ namespace Cars.Services
         //Authorization
         public async Task<string> Authorization(string login, string password)
         {
-            if (EFSingleTon.instance.Users.FirstOrDefault(u => u.Login == login && u.Password == password) != null)
-            {
-                AuthorizationUserId = EFSingleTon.instance.Users.FirstOrDefault(u => u.Login == login && u.Password == password).Id;
+            var user = EFSingleTon.instance.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
 
+            if (user != null)
+            {
+                if (user.Role == "Admin")
+                    UserIsAdmin = true;
+                else
+                    UserIsAdmin = false;
                 return "";
             }
             else

@@ -10,7 +10,6 @@ namespace Cars.Models
     public class Car
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
 
         public string Model { get; set; } = "";
         public string Description { get; set; } = "";
@@ -23,11 +22,11 @@ namespace Cars.Models
         public BaseCommandParameter DeleteCar { get; set; } = new BaseCommandParameter(async (arg) =>
         {
             MainViewModel.DeleteCar.Execute(arg);
-        });
+        }, () => DB.instance.UserIsAdmin);
         [NotMapped]
         public BaseCommandParameter EditCar { get; set; } = new BaseCommandParameter(async (arg) =>
         {
             await Shell.Current.GoToAsync($"/AddCarPage?id={((Car)arg).Id}");
-        });
+        }, () => DB.instance.UserIsAdmin);
     }
 }

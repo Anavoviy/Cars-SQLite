@@ -32,15 +32,15 @@ namespace Cars.ViewModels
         public BaseCommand AddCar { get; set; } = new BaseCommand(async () =>
         {
             await Shell.Current.GoToAsync($"EditCar?id={0}");
-        });
+        }, () => DB.instance.UserIsAdmin);
         public BaseCommand AddEngine { get; set; } = new BaseCommand(async () =>
         {
             await Shell.Current.GoToAsync($"EditEngine?id={0}");
-        });
+        }, () => DB.instance.UserIsAdmin);
         public BaseCommand AddBodyType { get; set; } = new BaseCommand(async () =>
         {
             await Shell.Current.GoToAsync($"EditBodyType?id={0}");
-        });
+        }, () => DB.instance.UserIsAdmin);
 
         public static BaseCommandParameter DeleteCar { get; set; } = new BaseCommandParameter(async (arg) =>
         {

@@ -11,7 +11,6 @@ namespace Cars.Models
     public class Engine
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
 
         public string Model { get; set; }
         public double CylinderCapacity { get; set; }
@@ -27,11 +26,11 @@ namespace Cars.Models
         public BaseCommandParameter DeleteEngine { get; set; } = new BaseCommandParameter(async (arg) =>
         {
             MainViewModel.DeleteEngine.Execute(arg);
-        });
+        }, () => DB.instance.UserIsAdmin);
         [NotMapped]
         public BaseCommandParameter EditEngine { get; set; } = new BaseCommandParameter(async (arg) =>
         {
             await Shell.Current.GoToAsync($"/EditEngine?id={((Engine)arg).Id}");
-        });
+        }, () => DB.instance.UserIsAdmin);
     }
 }

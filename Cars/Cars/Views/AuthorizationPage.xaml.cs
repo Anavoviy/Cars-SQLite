@@ -74,29 +74,26 @@ namespace Cars.Views
             DB.instance.AddUserAsync(new User()
             {
                 Login = "admin",
-                Password = "admin"
+                Password = "admin",
+                Role = "Admin",
             });
 
 
             DB.instance.AddBodyTypeAsync(new BodyType()
             {
                 Title = "Джип 5дв.",
-                UserId = 1
             });
             DB.instance.AddBodyTypeAsync(new BodyType()
             {
                 Title = "Седан",
-                UserId = 1
             });
             DB.instance.AddBodyTypeAsync(new BodyType()
             {
                 Title = "Хэтчбэк 5дв.",
-                UserId = 1
             });
             DB.instance.AddBodyTypeAsync(new BodyType()
             {
                 Title = "Пикап",
-                UserId = 1
             });
 
             DB.instance.AddEngineAsync(new Engine()
@@ -105,8 +102,6 @@ namespace Cars.Views
                 HorsePower = 140,
                 CylinderArrangement = "I4",
                 CylinderCapacity = 2.0,
-
-                UserId = 1
             });
             DB.instance.AddEngineAsync(new Engine()
             {
@@ -114,8 +109,6 @@ namespace Cars.Views
                 HorsePower = 135,
                 CylinderArrangement = "I4",
                 CylinderCapacity = 2.0,
-
-                UserId = 1
             });
             DB.instance.AddEngineAsync(new Engine()
             {
@@ -123,8 +116,6 @@ namespace Cars.Views
                 HorsePower = 182,
                 CylinderArrangement = "I4",
                 CylinderCapacity = 1.5,
-
-                UserId = 1
             });
             DB.instance.AddEngineAsync(new Engine()
             {
@@ -132,8 +123,6 @@ namespace Cars.Views
                 HorsePower = 370,
                 CylinderArrangement = "I6",
                 CylinderCapacity = 6.7,
-
-                UserId = 1
             });
             DB.instance.AddEngineAsync(new Engine()
             {
@@ -141,54 +130,42 @@ namespace Cars.Views
                 HorsePower = 163,
                 CylinderArrangement = "I4",
                 CylinderCapacity = 2.0,
-
-                UserId = 1
             });
 
             DB.instance.AddCarAsync(new Car()
             {
                 Model = "Suzuki Grand Vitara",
-                IdBodyType = 1,
-                IdEngine = 1,
+                IdBodyType = DB.instance.GetBodyTypesAsync().Result.FirstOrDefault(b => b.Title == "Джип 5дв.").Id,
+                IdEngine = DB.instance.GetEnginesAsync().Result.FirstOrDefault(e => e.Model == "J20A").Id,
                 Description = "2007 год",
-
-                UserId = 1
             });
             DB.instance.AddCarAsync(new Car()
             {
                 Model = "Toyota Crown",
-                IdBodyType = 2,
-                IdEngine = 2,
+                IdBodyType = DB.instance.GetBodyTypesAsync().Result.FirstOrDefault(b => b.Title == "Седан").Id,
+                IdEngine = DB.instance.GetEnginesAsync().Result.FirstOrDefault(e => e.Model == "2JZGE").Id,
                 Description = "1989 год",
-
-                UserId = 1
             });
             DB.instance.AddCarAsync(new Car()
             {
                 Model = "Honda Civic",
-                IdBodyType = 3,
-                IdEngine = 3,
+                IdBodyType = DB.instance.GetBodyTypesAsync().Result.FirstOrDefault(b => b.Title == "Хэтчбэк 5дв.").Id,
+                IdEngine = DB.instance.GetEnginesAsync().Result.FirstOrDefault(e => e.Model == "L15C").Id,
                 Description = "2018 год",
-
-                UserId = 1
             });
             DB.instance.AddCarAsync(new Car()
             {
                 Model = "Dodge Ram",
-                IdBodyType = 4,
-                IdEngine = 4,
+                IdBodyType = DB.instance.GetBodyTypesAsync().Result.FirstOrDefault(b => b.Title == "Пикап").Id,
+                IdEngine = DB.instance.GetEnginesAsync().Result.FirstOrDefault(e => e.Model == "CUMMINS 6.7L").Id,
                 Description = "2014 год",
-
-                UserId = 1
             });
             DB.instance.AddCarAsync(new Car()
             {
                 Model = "Great Wall Poer KingKong",
-                IdBodyType = 4,
-                IdEngine = 5,
+                IdBodyType = DB.instance.GetBodyTypesAsync().Result.FirstOrDefault(b => b.Title == "Пикап").Id,
+                IdEngine = DB.instance.GetEnginesAsync().Result.FirstOrDefault(e => e.Model == "4D20").Id,
                 Description = "2023 год",
-
-                UserId = 1
             });
         }
 

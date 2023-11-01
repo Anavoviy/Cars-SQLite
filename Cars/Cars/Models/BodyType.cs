@@ -12,7 +12,6 @@ namespace Cars.Models
     public class BodyType
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
 
         public string Title { get; set; }
 
@@ -25,11 +24,11 @@ namespace Cars.Models
         public BaseCommandParameter DeleteBodyType { get; set; } = new BaseCommandParameter(async (arg) =>
         {
             MainViewModel.DeleteBodyType.Execute(arg);
-        });
+        }, () => DB.instance.UserIsAdmin);
         [NotMapped]
         public BaseCommandParameter EditBodyType { get; set; } = new BaseCommandParameter(async (arg) =>
         {
             await Shell.Current.GoToAsync($"/EditBodyType?id={((BodyType)arg).Id}");
-        });
+        }, () => DB.instance.UserIsAdmin);
     }
 }
