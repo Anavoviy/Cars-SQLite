@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Cars"
+             xmlns:v="clr-namespace:Cars.Views"
+             xmlns:vm="clr-namespace:Cars.ViewModels"
+             x:Class="Cars.Views.MainShell">
+
+
+    <MenuItem Clicked="ToAuthorization" Text="Выход"/>
+    <TabBar>
+        <ShellContent Route="Authorization" ContentTemplate="{DataTemplate v:AuthorizationPage}"/>
+    </TabBar>
+
+    <ShellContent Route="Main" Title="Списки" ContentTemplate="{DataTemplate local:MainPage}"/>
+
+    <TabBar>
+        <ShellContent Route="Registration" ContentTemplate="{DataTemplate v:RegistrationPage}"/>
+    </TabBar>
+</Shell>

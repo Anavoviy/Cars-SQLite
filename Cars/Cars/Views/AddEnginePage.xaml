@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cars.ViewModels.AddEnginePage"
+             Background="#222831">
+    <ContentPage.Content>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Vertical" BindingContext="{Binding EditEngine}">
+                <Label Text="Модель" TextColor="#FF5722"/>
+                <Entry Text="{Binding Model}" TextColor="#EEEEEE"/>
+
+                <Label Text="Расположение цилиндров" TextColor="#FF5722"/>
+                <Entry HeightRequest="40" Text="{Binding CylinderArrangement}" TextColor="#EEEEEE"/>
+
+                <Label Text="Объём" TextColor="#FF5722"/>
+                <Entry  Text="{Binding CylinderCapacity}" TextColor="#EEEEEE"/>
+
+                <Label Text="Мощность" TextColor="#FF5722"/>
+                <Entry Text="{Binding HorsePower}" TextColor="#EEEEEE"/>
+            </StackLayout>
+
+            <Grid Grid.Row="1">
+                <Button Background="#2D4059" Text="Сохранить" TextColor="#EEEEEE" FontSize="36" FontAttributes="Bold" Command="{Binding Save}" CommandParameter="{Binding EditEngine}"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

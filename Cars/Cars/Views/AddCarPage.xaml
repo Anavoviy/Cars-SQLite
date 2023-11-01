@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Cars"
+             xmlns:vm="clr-namespace:Cars.ViewModels"
+             x:Class="Cars.Views.AddCarPage"
+             Background="#222831">
+    <ContentPage.Content>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Vertical" Margin="10">
+                <Label Text="Модель" TextColor="#FF5722"/>
+                <Entry Text="{Binding EditCar.Model}" TextColor="#EEEEEE"/>
+
+                <Label Text="Описание" TextColor="#FF5722"/>
+                <Editor HeightRequest="40" Text="{Binding EditCar.Description}" TextColor="#EEEEEE"/>
+
+                <Label Text="Двигатель" TextColor="#FF5722"/>
+                <Picker ItemsSource="{Binding Engines}" SelectedItem="{Binding SelectedEngine}" TextColor="#EEEEEE"/>
+
+                <Label Text="Кузов" TextColor="#FF5722"/>
+                <Picker ItemsSource="{Binding BodyTypes}" SelectedItem="{Binding SelectedBodyType}" TextColor="#EEEEEE"/>
+            </StackLayout>
+
+            <Grid Grid.Row="1">
+                <Button Background="#2D4059" Text="Сохранить" TextColor="#EEEEEE" FontSize="36" FontAttributes="Bold" Command="{Binding Save}" CommandParameter="{Binding EditCar}"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
