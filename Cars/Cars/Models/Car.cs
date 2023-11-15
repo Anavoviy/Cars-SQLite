@@ -18,15 +18,5 @@ namespace Cars.Models
         public string EngineView { get; set; } = "";
         public string BodyTypeView { get; set; } = "";
 
-        [NotMapped]
-        public BaseCommandParameter DeleteCar { get; set; } = new BaseCommandParameter(async (arg) =>
-        {
-            MainViewModel.DeleteCar.Execute(arg);
-        }, () => DB.instance.UserIsAdmin);
-        [NotMapped]
-        public BaseCommandParameter EditCar { get; set; } = new BaseCommandParameter(async (arg) =>
-        {
-            await Shell.Current.GoToAsync($"/AddCarPage?id={((Car)arg).Id}");
-        }, () => DB.instance.UserIsAdmin);
     }
 }

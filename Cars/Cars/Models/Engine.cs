@@ -21,16 +21,5 @@ namespace Cars.Models
         {
             return Model + " Компоновка: " + CylinderArrangement + " Объём: " + CylinderCapacity + "л." + " Мощность: " + HorsePower + "л.с.";
         }
-
-        [NotMapped]
-        public BaseCommandParameter DeleteEngine { get; set; } = new BaseCommandParameter(async (arg) =>
-        {
-            MainViewModel.DeleteEngine.Execute(arg);
-        }, () => DB.instance.UserIsAdmin);
-        [NotMapped]
-        public BaseCommandParameter EditEngine { get; set; } = new BaseCommandParameter(async (arg) =>
-        {
-            await Shell.Current.GoToAsync($"/EditEngine?id={((Engine)arg).Id}");
-        }, () => DB.instance.UserIsAdmin);
     }
 }

@@ -7,38 +7,54 @@ using Xamarin.Forms;
 
 namespace Cars.ViewModels
 {
+    [QueryProperty(nameof(EngineId), "id")]
     public class AddEngineViewModel : BaseViewModel
     {
-        public Engine EditEngine { get; set; } = new Engine();
+        private int engineId;
+        private Engine editEngine = new Engine();
 
+        public int EngineId
+        {
+            get => engineId;
+            set
+            {
+                engineId = value;
+                if (engineId == 0)
+                    EditEngine = new Engine();
+                else
+                {
+                    Engine engine = DB.instance.GetEngineAsync(engineId).Result;
+                    if (engine != null)
+                        EditEngine = engine;
+                }
+            }
+        }
+
+        public Engine EditEngine { get => editEngine; set { editEngine = value; Signal(); } }
         public string Model { get; set;}
 
-        public BaseCommandParameter Save { get; set; } = new BaseCommandParameter(async (obj) => {
-
-            Engine engine = obj as Engine;
-            if (engine == null || engine.CylinderArrangement == "" || engine.CylinderArrangement == null || engine.Model == "" || engine.Model == null)
-                return;
-
-            if (engine.Id == 0)
-                await DB.instance.AddEngineAsync(engine);
-            else
-                await DB.instance.UpdateEngineAsync(engine);
-
-            AddEngineViewModel.Exit.Execute();
-        });
+        public BaseCommand Save { get; set; }
         public static BaseCommand Exit { get; set; } = new BaseCommand(async () =>
         {
-            await Shell.Current.GoToAsync("///Main?update=1");
+            await Shell.Current.GoToAsync("///Main");
         });
 
         public AddEngineViewModel()
         {
-        }
-        public AddEngineViewModel(Engine engine)
-        {
-            EditEngine = engine;
+            Save = new BaseCommand(async () => {
 
-            Signal();
+                Engine engine = EditEngine;
+                if (engine == null || engine.CylinderArrangement == "" || engine.CylinderArrangement == null || engine.Model == "" || engine.Model == null)
+                    return;
+
+                if (engine.Id == 0)
+                    await DB.instance.AddEngineAsync(engine);
+                else
+                    await DB.instance.UpdateEngineAsync(engine);
+
+                AddEngineViewModel.Exit.Execute();
+            });
         }
+        
     }
 }

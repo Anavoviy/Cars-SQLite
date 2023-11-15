@@ -13,33 +13,12 @@ using Xamarin.Forms;
 namespace Cars
 {
 
-    [QueryProperty(nameof(UpdateYes), "update")]
     public partial class MainPage : ContentPage, INotifyPropertyChanged
     {
-        private int updateYes;
-
-        public int UpdateYes
-        {
-            get => updateYes;
-            set
-            {
-                updateYes = value;
-                
-                BindingContext = new MainViewModel();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void Signal([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new MainViewModel();
-            Signal();
         }
 
         private void CarsVisible(object sender, EventArgs e)
@@ -92,5 +71,8 @@ namespace Cars
 
             new BaseViewModel().Signal();
         }
+
+        protected override void OnAppearing() => ((MainViewModel)this.BindingContext).OnAppearing();
+       
     }
 }

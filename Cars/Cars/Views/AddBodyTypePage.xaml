@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Cars.ViewModels"
              x:Class="Cars.Views.AddBodyTypePage"         
+             BindingContext="{DynamicResource VM}"
              Background="#222831">
+    <ContentPage.Resources>
+        <vm:AddBodyTypeViewModel x:Key="VM"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid Margin="10">
             <Grid.RowDefinitions>
@@ -15,7 +20,7 @@
             </StackLayout>
 
             <Grid Grid.Row="1">
-                <Button Background="#2D4059" Text="Сохранить" TextColor="#EEEEEE" FontSize="36" FontAttributes="Bold" Command="{Binding Save}" CommandParameter="{Binding EditBodyType}"/>
+                <Button Background="#2D4059" Text="Сохранить" TextColor="#EEEEEE" FontSize="36" FontAttributes="Bold" Command="{Binding Save}"/>
             </Grid>
         </Grid>
     </ContentPage.Content>
